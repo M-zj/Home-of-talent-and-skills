@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd  
+            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd  
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd  
+            http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop-4.2.xsd  
+            http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+	<!-- 默认扫描的包路径 -->
+	<context:component-scan base-package="com.srx.controller" />
+	
+	
+	
+	<!-- SolrServer的配置 （在这里没用，不明白问帅哥穆志俊） -->
+	<bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+		<constructor-arg index="0" value="http://localhost:8081/solr/collection1"/>
+	</bean>
+	
+	
+	
+    <!-- 配置json解析 -->
+    <mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+    <!-- 不能同时访问静态资源和动态资源的问题 -->
+    <mvc:default-servlet-handler/>
+
+    <!-- 配置静态资源，直接映射到对应的文件夹，不被DispatcherServlet处理，3.04新增功能，需要重新设置spring-mvc-3.0.xsd -->
+    <mvc:resources mapping="/img/**" location="/img/" />
+    <mvc:resources mapping="/js/**" location="/js/" />
+    <mvc:resources mapping="/css/**" location="/css/" />
+    <mvc:resources mapping="/html/**" location="/html/" />
+    <mvc:resources mapping="/json/**" location="/json/" />
+    <mvc:resources mapping="/mp4/**" location="/mp4/" />
+    
+<!--   <mvc:cors>
+        <mvc:mapping path="/**"    
+              allowed-origins="*"  
+              allowed-methods="*"  
+              allowed-headers="*"
+              allow-credentials="true"/>
+  </mvc:cors> -->
+ 
+
+ 	<!-- 定义跳转的文件的前后缀   视图解析-->
+ 	
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<!-- <property name="suffix" value=".html" /> -->
+	</bean>
+
+	
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:defaultEncoding='UTF-8' p:maxUploadSize='524288000' p:uploadTempDir='upload/temp' />
+
+	<!-- 配置登录拦截器 -->
+ <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/home.*" />
+			<mvc:mapping path="/HP.*" />
+			<mvc:mapping path="/index.*" />
+			<mvc:mapping path="/info.*" />
+			<mvc:mapping path="/info_hd.*" />
+			<mvc:mapping path="/Upload_video.*" />
+			<mvc:mapping path="/Upload_video1.*" />
+			<mvc:mapping path="/VP.*" />
+			<bean class="com.srx.util.LoginIntecepter"></bean>
+		</mvc:interceptor>
+ </mvc:interceptors>  
+
+	
+
+	<!-- i18n start -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>/messages/message</value>
+		</property>
+	</bean>
+
+
+	<!-- 基于Cookie的本地化解析器 -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieMaxAge" value="604800" />
+		<property name="cookieName" value="Language"></property>
+	</bean>
+</beans>

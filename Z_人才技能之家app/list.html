@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+	<head>
+		<meta charset="utf-8">
+		<title>人才列表</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+		<link href="./resource/ionic/ionic.css"rel="stylesheet">
+		<script src="./resource/ionic/ionic.bundle.min.js"></script>
+		 <link href="./resource/css/uitest.css" rel="stylesheet">
+		</head>
+		
+		<body ng-controller="AppCtrl">
+		 <div class="head" ng-repeat="x in contacts">
+		 		
+		        <div class="background-head">
+		            <img  ng-src="{{x.iimg}}">
+		        </div>
+		        <div class="background-bottom">
+		
+		        </div>
+		        <div class="float-head">
+		            <p class="content-title">{{x.tname}}</p>
+		            <p class="content-plan">{{x.iname}} </p>
+		            <span class="content-time">{{x.iintroduction}}</span>
+		        </div>
+		    </div>
+
+			<div class="background-center">
+				  <div class="list" >
+						 <div  ng-repeat="n in listdata" class="item item-thumbnail-left" ng-click="get_video(n.iid,n.vurl,n.vid)" >
+							 <img  ng-src="{{n.vpicture}}">
+							 <h2>{{n.iname}}</h2>
+							 <p>{{n.vtitle}}</p>
+							 <p>热度：<span style="color:red;">{{n.vclicks}}</span> 丨 {{n.vdate}}</p>
+						 </div>
+					 </div>
+			 </div>
+
+		</div>
+
+		</body>
+		<script>
+	/*请求服务器地址*/
+	//var srx_url="http://www.cytxjd.top/Home_of_talent_and_skills/";
+	/*请求本地地址*/
+	//var srx_url="http://192.168.199.233:8080/Home_of_talent_and_skills/";
+	var srx_url="http://www.cytxjd.top/Home_of_talent_and_skills/";
+		var app = angular.module('ionicApp', ['ionic']);
+		app.controller('AppCtrl', function($scope,$http) {
+			/*获取专家信息*/
+			$http.post(srx_url+"selectzhuanjia.do").success(function(e){
+				$scope.contacts=e.data; 
+				console.log(e);
+				});
+			/*获取视频列表*/
+			$http.get(srx_url+"sel_Top_Video_where.do").success(function(e) {
+				$scope.listdata=e.data;
+				console.log(e);
+				
+			})
+			/*向视频播放页面传值*/
+		   $scope.get_video=function(){
+			/* alert(arguments[0],arguments[1],arguments[2]); */
+			$http.get(srx_url+"video.do",{params:{iid:arguments[0],vurl:arguments[1],vid:arguments[2]}}).success(function(e){
+
+				console.log(e);
+
+			})
+			location.href="video_is_recommended.html";
+			}
+		});
+		</script>
+</html>

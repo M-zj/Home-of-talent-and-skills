@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataConfig>
+    <dataSource type="JdbcDataSource"
+	driver="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+	url="jdbc:sqlserver://localhost:1433;DatabaseName=solr"
+	user="sa"
+	password="1"
+	/>
+    <document>
+        
+
+       <entity name="product" query="select pid,name,catalog,catalog_name,price,description,picture from products">
+                <field column="pid" name="id" />
+	<field column="name" name="product_name" />
+	 <field column="catalog" name="product_catalog" />
+                  <field column="catalog_name" name="product_catalog_name" />
+                   <field column="price" name="product_price" />
+                  <field column="description" name="product_description" />
+                 <field column="picture" name="product_picture" />
+        </entity>
+    </document>
+</dataConfig>

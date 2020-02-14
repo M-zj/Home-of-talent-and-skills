@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataConfig>
+    <dataSource
+	driver="com.mysql.jdbc.Driver"
+	url="jdbc:mysql://localhost:3306/personnel"
+	user="root"
+	password="123456"
+	/>
+    <document>
+       <entity name="product"  pk="vid" query="select video.vid,video.vtitle,video.vdate,video.vclicks,video.vurl,video.vpicture,video.iid,introduction.iname from video INNER JOIN introduction on video.iid=introduction.iid">
+                <field column="vid" name="id" />
+	<field column="vtitle" name="vtitle" />
+	 <field column="vdate" name="vdate" />
+                  <field column="vclicks" name="vclicks" />
+                  <field column="vurl" name="vurl" />
+                   <field column="vpicture" name="vpicture" />
+	<field column="iid" name="iid" />
+	<field column="iname" name="iname" />
+        </entity>
+    </document>
+</dataConfig>

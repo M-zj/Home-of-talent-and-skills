@@ -1,0 +1,456 @@
+<html ng-app="ionicApp">
+ <head> 
+  <meta name="referrer" content="no-referrer" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" /> 
+  <title>人才技能之家</title> 
+  <link href="resource/ionic/ionic.css" rel="stylesheet" />
+  <link rel="stylesheet" hsref="resource/swiper/swiper.css" /> 
+  <link href="resource/home/css/home.css" rel="stylesheet" />
+  <link href="resource/home/css/app.css" rel="stylesheet" />
+  <link href="resource/home/css/ui.css" rel="stylesheet" />
+  <link href="resource/home/css/mui.min.css" rel="stylesheet" />
+  <script src="resource/jquery/jquery2.2.4.min.js"></script>
+  <link rel="stylesheet" href="resource/mzj/Celebrity_column.css" /> 
+  <link rel="shortcut icon" href="#" /> 
+
+ </head>
+ <body style="scroll-behavior: auto" animation="slide-left-right-ios7" ng-controller="AppCtrl">
+  <ion-nav-bar class="bar-positive"> 
+   <ion-nav-back-button> 
+   </ion-nav-back-button> 
+  </ion-nav-bar> 
+  <ion-nav-view></ion-nav-view> 
+  <script id="templates/tabs.html" type="text/ng-template">
+      <ion-tabs class="tabs-icon-top tabs-positive">
+        <ion-tab title="技能人才之家" icon="ion-home" href="#/tab/home">
+          <ion-nav-view name="home-tab"></ion-nav-view>
+        </ion-tab>
+        <ion-tab title="政策法规" icon="ion-ios-information" href="#/tab/about">
+          <ion-nav-view name="about-tab"></ion-nav-view>
+        </ion-tab>
+        <ion-tab title="设置" icon="ion-ios-world" ui-sref="tabs.contact">
+          <ion-nav-view name="contact-tab"></ion-nav-view>
+        </ion-tab>
+      </ion-tabs>
+    </script> 
+  <script id="templates/home.html" type="text/ng-template">
+      <ion-view view-title="技能人才之家">
+        <ion-content class="padding" overflow-scroll="true">
+          <ion-pane>
+		<ion-content >
+        <ion-refresher pulling-text="下拉刷新" on-refresh="homedoRefresh()"></ion-refresher>
+		<div class="content">
+        <ion-item class="item-input item-input-shurukuang">
+                <span class="item-input-wrapper" style="margin-right:16px;cursor:pointer;height:37px">
+                        <i class="icon ion-ios-search placeholder-icon" ng-click="search()"></i>
+                        <input id="search" style="margin-top:18px" type="search" placeholder="请输出您想查找的内容" ng-model="searchCont.key" ng-click="Search()">
+                        <i class="icon ion-close-circled placeholder-icon" style="vertical-align: middle;cursor:pointer"
+                           on-tap="clear
+						   ()" ng-if="searchCont.key.length" ></i>
+                 </span>
+        </ion-item>
+        <ion-item class="" ng-repeat="item in itemArr2"></ion-item>
+    <div class="row">
+        <div class="col">
+            <div class="swiper-container swiper-container-lunbo">
+				
+				<ion-slides options="options" slider="data.result">
+					<ion-slide-page ng-repeat="x in rclist">
+						<div ng-click="get_video(x.iid,x.vurl,x.vid)"><img  style="width:100%;height: 12rem;border-radius:4px;" ng-src="{{x.aurl}}"></div>
+					</ion-slide-page>
+				</ion-slides>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+        	<div class="col-demo div_caidanlan">
+        		            <div class="col-demo div_caidanlan">
+<div class="swiper-container-message swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide swiper-slide-caidanlan" ng-repeat="sm in selMenuitem">
+			<a href="{{sm.mhref}}">
+				<img  ng-src="{{sm.murl}}"/>
+			</a>
+		</div>
+    </div>
+</div>
+			</div>
+            </div>	
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="col-demo div_fontxianshi">名师推荐</div>
+        </div>
+    </div>
+    <!-- 滑动专家 -->
+	<div class="row">
+		<div class="col">
+			<div class="col-demo div_rencaizhanshi">
+				<div class="swiper-container-caidnalan swiper-container">
+					<div class="swiper-wrapper">
+						<div 
+						 ng-repeat="x in contacts"  ng-click="zhuanjia(x.iid)"	class="swiper-slide swiper-slide-message item-thumbnail-right">
+							<img  ng-src="{{x.iimg}}" style="height: 63%; width: 23%;" />
+							<div class="remark_position">{{x.iname}}</div>
+							<div class="name_position">{{x.iintroduction}}</div>
+							<div class="heat_position">热度 <span style="color:red;">{{x.iclick}}</span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="row">
+        <div class="col">
+            <div class="col-demo div_fontshiping">
+                视频推荐
+            </div>
+        </div>
+    </div>
+    <ion-scroll direction="y">
+        <div class="content ionic-pseudo">
+            <div class="list" >
+                <div ng-repeat="n in listdata" class="item item-thumbnail-left" ng-click="get_video(n.iid,n.vurl,n.vid)" >
+                    <img  ng-src="{{n.vpicture}}">
+                    <h2>{{n.iname}}</h2>
+                    <p>{{n.vtitle}}</p>
+					<p>热度：<span style="color:red;">{{n.vclicks}}</span> 丨 {{n.vdate}}</p>
+					<!-- 滑动特效 -->
+                    <script type="text/javascript">
+
+                        var swiper = new Swiper('.swiper-container-message', {
+                            slidesPerView : 5,
+                            paginationClickable : true,
+                            spaceBetween : 20,
+                            freeMode : true,
+                            observer: true,//修改swiper自己或子元素时，自动初始化swiper
+                            observeParents: true//修改swiper的父元素时，自动初始化swiper
+                        });
+                        var swiper = new Swiper('.swiper-container-caidnalan', {
+                            slidesPerView : 1.2,
+                            paginationClickable : true,
+                            spaceBetween : 10,
+                            freeMode : true,
+                            observer: true,//修改swiper自己或子元素时，自动初始化swiper
+
+                        });
+                        </script>
+                </div>
+            </div>
+        </div>
+    </ion-scroll>
+</div>
+    </ion-content>
+</ion-pane>
+        </ion-content>
+      </ion-view>
+  </script>
+	
+
+    <script id="templates/about.html" type="text/ng-template">
+	<ion-view view-title="政策法规">
+        <ion-content class="padding" overflow-scroll="true" style="top:30px;">
+          <ion-pane>
+    <ion-content >
+        <ion-refresher pulling-text="下拉刷新" on-refresh="zcfgdoRefresh()"></ion-refresher>
+				        <ion-item class="item-input item-input-shurukuang" style="border:0px">
+        </ion-item>
+        <ion-item class="" ng-repeat="item in itemArr2"></ion-item>
+			<div class="content has-header ionic-pseudo" style="margin-top:-33px">
+	    <div class="box">
+
+
+    <div class="pos"><h4 class="h">政策专题</h4></div>
+    <hr>
+	</div>
+		<div class="boxs">
+			<img  src="./resource/images/zcfg_jpg/zcfg.jpg" style="width:100%"/>
+		</div>
+<div class="box" style="margin-top:38px">
+    <div class="pos"><h4 class="h">法规列表</h4></div>
+    <hr>
+</div>
+      <div class="list">
+        <a class="item" ng-click="fagui(x.id)" ng-repeat="x in g1">
+          <i>
+				{{x.name}}
+    </i>
+         <div style="float:right;margin-top:3px;"><i class="icon ion-ios-arrow-forward"></i></div>
+        </a>
+      </div>
+
+
+		</div>
+        </ion-content>
+      </ion-view>
+
+    </script>
+	
+  <script id="templates/contact.html" type="text/ng-template">
+	<!-- 设置 -->
+	<ion-view view-title="设置">
+        <ion-content class="padding" overflow-scroll="true">
+          <ion-pane>
+    <ion-content >
+	  <div class="aui-container">
+			<div class="aui-page">
+				<div class="aui-page-my">
+					<div class="aui-my-info">
+						<div class="aui-my-info-back"></div>
+						<a href="javascript:;" class="">
+							<img  src="resource/images/icon-png/head.png" class="aui-my-avatar"><!-- 头像 -->
+						</a>
+						<div class="aui-mt-location aui-l-red"></div><!-- V标志 -->
+					</div>
+					<div class="aui-l-content">
+						<div class="aui-menu-list aui-menu-list-clear">
+							<ul>
+								<li class="b-line">
+									<a href="#">
+										<div class="aui-icon"><img  src="resource/images/icon-home/Join-us.png"></div>
+										<h3>正在开发...<!--加入我们--></h3>
+										<div class="aui-time"><i class="aui-jump"></i></div>
+									</a>
+								</li>
+								<li class="b-line">
+									<a href="#">
+										<div class="aui-icon"><img  src="resource/images/icon-home/follow.png"></div>
+										<h3>正在开发...<!--关注--></h3>
+										<div class="aui-time">	<i class="aui-jump"></i></div>
+									</a>
+								</li>
+						<!--		<li class="b-line">
+									<a href="javascript:;">
+										<div class="aui-icon"><img  src="./resource/images/icon-home/At-night.png"></div>
+										<h3>夜间模式</h3>
+	                                    <label class="toggle disable-user-behavior">
+	                                        <input type="checkbox" value="on" id="yejianmoshi">
+	                                        <div class="track">
+	                                            <div class="handle"></div>
+	                                        </div>
+	                                    </label>
+									</a>
+								</li>-->
+								<li class="b-line">
+									<a href="#">
+										<div class="aui-icon"><img  src="resource/images/icon-home/About-us.png"></div>
+										<h3>正在开发...<!--关于我们--></h3>
+										<div class="aui-time"><i class="aui-jump"></i></div>
+									</a>
+								</li>
+								<li class="b-line">
+									<a href="#">
+										<div class="aui-icon"><img  src="resource/images/icon-home/Set-up.png"></div>
+										<h3>正在开发...<!--设置--></h3>
+										<div class="aui-time"><i class="aui-jump"></i></div>
+									</a>
+								</li>
+								<li class="b-line">
+									<a href="#">
+										<div class="aui-icon"><img  src="resource/images/icon-home/Sign-out.png"></div>
+										<h3>正在开发...<!--退出--></h3>
+										<div class="aui-time"><i class="aui-jump"></i></div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> 
+  </script>
+  <script src="resource/home/js/night.js"></script>
+    <script src="resource/swiper/swiper.min.js"></script>
+
+  <script src="resource/ionic/ionic.bundle.min.js"></script>
+	<script type="text/javascript">
+		
+	/*请求服务器地址*/
+	//var srx_url="http://www.cytxjd.top/Home_of_talent_and_skills/";
+	/*请求本地地址*/
+	//var srx_url="http://192.168.199.233:8080/Home_of_talent_and_skills/";
+	var srx_url="http://www.cytxjd.top/Home_of_talent_and_skills/";
+		
+   var app=angular.module('ionicApp', ['ionic']);
+/////////////////////////////////////////////////////////
+
+
+   
+
+	app.controller('AppCtrl',[ '$scope', '$timeout', '$http',function($scope, $timeout, $http,$ionicSlideBoxDelegate) {
+		$scope.myActiveSlide = 1;
+			//轮播图
+					$scope.options = {
+					  loop: false,
+					  effect: 'fade',
+					  speed: 1000,
+					  autoplay:2000,
+					  autoplayDisableOnInteraction: false,
+					};
+			$scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+					/*凯:查询广告轮播 */
+					$http.post(srx_url+"Tab_fzk.do").success(function(e){
+						console.log(e);
+					$scope.rclist=e.data;
+					}).error(function(e)
+						    {
+						console.log("图片轮播");
+					});
+					
+			});
+		 /* 查询selMenuitem专家类型 */
+		function selMenuitem() {
+			$http.get(srx_url+'selMenuitem.do') //注意改为自己本站的地址，不然会有跨域问题
+			.success(function(e) {
+				console.log(e);
+				$scope.selMenuitem = e.data;
+			}).error(function(e)
+		    {
+				console.log("图片轮播2");
+		    });
+			}
+						/* 凯:页面跳转带参数 */
+						$scope.get_video=function(){
+														/* alert(arguments[0],arguments[1],arguments[2]); */
+														$http.get(srx_url+"video.do",{params:{iid:arguments[0],vurl:arguments[1],vid:arguments[2]}}).success(function(e){
+															
+															console.log(e);
+															
+														})
+														location.href="video_is_recommended.html";
+														}	
+					 		
+					 	/* 凯：热度查询视频 */
+					 	$http.get(srx_url+"sel_Top_Video.do").success(function(e) {
+							console.log(e);
+							$scope.listdata=e.data;
+						}) 
+					
+					 	/* 耿鹏丽政策法规 */
+					 	$http.get(srx_url+"ss.do").success(function(e) {
+					 		console.log(e);
+            				$scope.g1=e.data;
+        				})
+						/* 首页下拉刷新 */
+						$scope.homedoRefresh = function() {
+							console.log("首页刷新咯");
+							location.reload('templates/about.html');
+							/* selMenuitem();  */
+							$scope.$broadcast('scroll.refreshComplete');
+						};
+						/* 互动答疑下拉刷新 */
+						$scope.hddyRefresh=function(){
+							console.log("互动答疑刷新咯");
+							//location.replace('tab.do#/tab/contact');
+							$scope.$broadcast('scroll.refreshComplete');
+						}
+						/* 政策法规跳转 */
+						$scope.fagui=function(){
+							/* alert(arguments[0]); */
+							$http.get(srx_url+"zcfg_content.do",{params:{id:arguments[0]}}).success(function(e){
+								console.log(e);
+							})
+							location.href="zcfg_content.html";
+						}
+						/* 互动答疑跳转 */
+						$scope.hudong=function(){
+							/* alert(arguments[0]); */
+							$http.get(srx_url+"zjdy.do",{params:{id:arguments[0]}}).success(function(){
+								
+							})
+							location.href="Expert.html";
+						}
+						
+						/* 政策法规下拉刷新 */
+						$scope.zcfgdoRefresh = function() {
+							console.log("政策法规刷新咯");
+							$http.get(srx_url+"ss.do").success(function(e){
+								console.log(e);
+								$scope.g1=e.data;
+								/* selMenuitem();  */
+								$scope.$broadcast('scroll.refreshComplete');
+							})
+							location.reload('templates/about.html');
+							/* selMenuitem();  */
+							$scope.$broadcast('scroll.refreshComplete');
+						};
+						$scope.Search = function() {
+							location.href = "Search.html";
+						}					
+						/* 帆翼龙 */
+						$http.get(srx_url+"select.do").success(function(e){
+							$scope.contacts=e.data; 
+							console.log(e);
+							});
+						/* 跳转 */
+						 $scope.zhuanjia=function(a){
+							 $http.get(srx_url+"list.do",{params:{id:a}}).success(function(e){
+								 console.log(e)
+							 })
+							 location.href="list.html";
+					     }								
+						selMenuitem();
+					} ])
+					app.controller('HomeTabCtrl', function($scope) {
+						console.log('HomeTabCtrl');
+	});
+	//////////////////////////////////////////////////
+	app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+	 	$ionicConfigProvider.platform.ios.tabs.style('standard');
+	 	$ionicConfigProvider.platform.ios.tabs.position('bottom');		
+	 	$ionicConfigProvider.platform.android.tabs.style('standard');
+	 	$ionicConfigProvider.platform.android.tabs.position('bottom');
+	 	$ionicConfigProvider.platform.ios.navBar.alignTitle('center');
+	 	$ionicConfigProvider.platform.android.navBar
+	 			.alignTitle('center');
+	 	$ionicConfigProvider.platform.ios.backButton.previousTitleText(
+	 			'').icon('ion-ios-arrow-thin-left');
+	 	$ionicConfigProvider.platform.android.backButton
+	 			.previousTitleText('').icon('ion-android-arrow-back');
+	 	$ionicConfigProvider.platform.ios.views.transition('ios');
+	 	//这行就是解决方案，你自己删掉后看看
+	 	$ionicConfigProvider.platform.android.views
+	 			.transition('android');
+				$stateProvider
+					.state('tabs', {
+						url : "/tab",
+						abstract : true,
+						templateUrl : "templates/tabs.html"
+					}).state('tabs.home', {
+						url : "/home",
+						views : {
+							'home-tab' : {
+								templateUrl : "templates/home.html",
+								controller : 'HomeTabCtrl'
+							}
+						}
+					}).state('tabs.about', {
+						url : "/about",
+						views : {
+							'about-tab' : {
+								templateUrl : "templates/about.html"
+							}
+						}
+					}).state('tabs.contact', {
+						url : "/contact",
+						views : {
+							'contact-tab' : {
+								templateUrl : "templates/contact.html"
+							}
+						}
+					});
+					$urlRouterProvider.otherwise("/tab/home");
+				});
+app.config(['$httpProvider',function($httpProvider){
+	$httpProvider.defaults.withCredentials=true;
+	console.log($httpProvider);
+	}
+])
+	</script>
+
+	
+ </body>
+</html>

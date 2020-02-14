@@ -1,0 +1,4 @@
+127.0.0.1 - - [29/Dec/2019:14:50:28 +0800] "GET /solr/collection1/select?sort=product_price+asc&start=0&rows=16&df=product_keywords&fl=id%2Cproduct_name%2Cproduct_price%2Cproduct_picture&wt=javabin&version=2 HTTP/1.1" 200 203
+127.0.0.1 - - [29/Dec/2019:14:50:43 +0800] "GET /solr/collection1/select?q=%E5%A4%A9%E4%B8%8B&sort=product_price+asc&start=0&rows=16&df=product_keywords&fl=id%2Cproduct_name%2Cproduct_price%2Cproduct_picture&wt=javabin&version=2 HTTP/1.1" 200 344
+127.0.0.1 - - [29/Dec/2019:14:50:49 +0800] "GET /solr/collection1/select?sort=product_price+asc&start=0&rows=16&df=product_keywords&fl=id%2Cproduct_name%2Cproduct_price%2Cproduct_picture&wt=javabin&version=2 HTTP/1.1" 200 202
+127.0.0.1 - - [29/Dec/2019:14:51:53 +0800] "GET /solr/collection1/select?q=%E5%A4%A9%E4%B8%8B&sort=product_price+asc&start=0&rows=8&df=product_keywords&fl=id%2Cproduct_name%2Cproduct_price%2Cproduct_picture&wt=javabin&version=2 HTTP/1.1" 200 279

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="./resource/home/css/Search-Ck.css">
+    <link href="https://cdn.staticfile.org/ionic/1.3.2/css/ionic.css" rel="stylesheet">
+    <title>搜索框</title>
+	
+</head>
+<body ng-app="ionicApp" ng-controller="AppCtrl">
+<div>
+    <div class="body_head row">
+        <a href="./tab.html">
+            <div class="col body-icon-return">
+                <div class="col body-icon-return">
+                    <i class="icon ion-chevron-left head_left"></i>
+                </div>
+            </div>
+        </a>
+        <div class="col-50 TxT-D">
+            <input type="text" placeholder="请输入搜索名称" id="text" class="txt" ng-focus="SearchF()" ng-change="SearchC()" ng-model="SearchVal"/>
+        </div>
+        <div class="col head_left" ng-click="SearchClick()">搜索</div>
+    </div>
+    <div class="row border-head"></div>
+    <div class="Search-Completed-Page" ng-hide="SearchCompletedPage">
+    <a ng-repeat="item in TVideo" ng-click="get_video(item.iid,item.vurl,item.vid)">
+        <div class="D-Result row" ng-hide="v">
+            <div class="Result-icon col-30">
+                <img  alt="" ng-src="{{item.vpicture}}">
+            </div>
+            <div class="Result-right col">
+                <div class="row Result-right-title">{{item.vtitle}}</div>
+                <div class="row Result-right-Name">{{item.iname}}</div>
+                <div class="row">
+                    <div class="col-40 Result-right-VV"> 播放量:{{item.vclicks}}</div>
+                    丨
+                    <div class="col-45 Result-right-Date">发布日期:{{item.vdate|date: 'yyyy-MM-dd'}}</div>
+                </div>
+            </div>
+        </div>
+        </a>
+        <div class="D-Result row" ng-hide="SearchResultNull">
+            <div class="col Search-Null">
+                没有搜索结果
+            </div>
+        </div>
+    </div>
+
+    <div ng-hide="SearchRecommended" class="Search-Recommended">
+        <div class="Search-Recommended row" ng-repeat="item in TVideo">
+            <div class="col Search-Recommended-col" ng-click="SearchResultF()">{{item.vtitle}}</div>
+        </div>
+    </div>
+    <div ng-hide="RecommendSearchRecord">
+        <div class="row">
+            <div class="body_txt  col">清除历史</div>
+        </div>
+        <div class="row">
+            <div class="body_txt col Search-history"></div>
+        </div>
+        <div class="row">
+            <div class="body_txt col">热门搜索</div>
+        </div>
+        <div class="row">
+            <div class="body_txt col" id="body_txt">
+               <!--  <input type="button" class="bottom" value="啦啦啦" ng-click="HistoryClick($event)" ng-model="ButHistory">-->
+                 </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="./resource/jquery/jquery2.2.4.min.js"></script>
+<script src="https://cdn.staticfile.org/ionic/1.3.2/js/ionic.bundle.min.js"></script>
+<script src="./resource/home/js/search.js"></script>
+</html>

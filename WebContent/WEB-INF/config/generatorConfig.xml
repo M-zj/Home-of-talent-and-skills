@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration> 
+  <context id="context1"> 
+    <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/personnel" driverClass="com.mysql.jdbc.Driver" password="123456" userId="root"/>  
+    <javaModelGenerator targetPackage="com.srx.model.srx_fzk_model" targetProject="Home_of_talent_and_skills"/>  
+    <sqlMapGenerator targetPackage="com.srx.mapper.srx_fzk_mapper" targetProject="Home_of_talent_and_skills"/>  
+    <javaClientGenerator targetPackage="com.srx.dao.srx_fzk_dao" targetProject="Home_of_talent_and_skills" type="XMLMAPPER"/>  
+    <table schema="" tableName="user_interaction"/>  
+    <!--
+ 	 <table schema=""   tableName="type" />
+     <table schema=""   tableName="introduction" />
+	 <table schema=""   tableName="advertisement" />
+     <table schema=" "   tableName="video" /> 
+     --> 
+  </context> 
+</generatorConfiguration>

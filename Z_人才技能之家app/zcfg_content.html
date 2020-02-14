@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>法规查看</title>
+    <link href="https://cdn.staticfile.org/ionic/1.3.2/css/ionic.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/ionic/1.3.2/js/ionic.bundle.min.js"></script>
+    <script>
+    angular.module('myApp', ["ionic"])
+	
+    .controller('mctrl', function($scope,$timeout,$http) {
+	/*请求服务器地址*/
+	//var srx_url="http://www.cytxjd.top/Home_of_talent_and_skills/";
+	/*请求本地地址*/
+	//var srx_url="http://192.168.199.233:8080/Home_of_talent_and_skills/";
+	var srx_url="http://www.cytxjd.top/Home_of_talent_and_skills/";
+    	$http.get(srx_url+"zcfg_contentt.do")
+        .success(function(e) {
+        	console.log("2");
+        	console.log(e);
+            $scope.rclist=e.data;
+            
+        })
+
+    });
+    </script>
+</head>
+<body ng-controller="mctrl">
+<ion-pane>
+            <ion-content >
+                <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+    <div class="bar bar-header" ng-repeat="x in rclist">
+      <div class="h1 title">{{x.name}}</div>
+    </div>
+    
+    <div class="content has-header" style="margin-left:5%;margin-right:5%;line-height:30px">
+
+      <div class="list"  ng-repeat="x in rclist">
+          		<div ng-bind-html="x.content"></div>
+      </div>
+
+    </div>
+
+          </ion-content>
+        </ion-pane>
+  </body>
+</html>

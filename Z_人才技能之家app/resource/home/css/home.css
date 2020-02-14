@@ -1,0 +1,114 @@
+/* 栅格化样式 */
+    	html{
+            height: 100%;
+        }
+        html, body {
+            position: relative;
+            height: 100%;
+            background-color: #FAFAFA;
+        }
+        html body .content .row .col .div_sousuo{
+            height: 20px;
+            line-height: 20px;
+        }
+        html body .content .row .col .div_lunbo{
+            height: 200px;
+            line-height: 200px;
+        }
+        html body .content .row .col .div_fontxianshi{
+            text-align: left;
+        }
+        html body .content .row .col .div_rencaizhanshi{
+            height: 105px;
+        }
+        html body .content .row .col .div_caidanlan{
+            height: 50px;
+            line-height: 40px;
+            
+        }
+        html body .content .row .col .div_fontshiping{
+            text-align: left;
+        }
+        html body .content .row .col .div_shipingliebiao{
+            height: 60px;
+        }
+        html body .content .item-input-shurukuang{
+            border:none;position:relative;
+        }
+/*           .col{
+            background-color: #F9FAFB;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            text-align: center;
+        } */
+        /* 广告轮播与信息轮播样式 */
+        .swiper-container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+     
+        .swiper-container-message{
+            height: 50px;       
+            line-height: 50px;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+        }
+        
+        .swiper-container-caidnalan{
+            height: 99px;           
+            line-height: 60px;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+        }
+
+
+        .swiper-slide-message{
+            background-color: #E6E6E6;
+            text-align: center;
+            border-radius: 4px;
+            text-align:left;
+            
+        }
+
+        .swiper-slide-caidanlan{
+        	background-color: transparent;
+            text-align: center;
+           /*  border-radius: 50px; */
+        }
+          .swiper-slide-caidanlan img{
+        	background-color: #E6E6E6;
+            text-align: center;
+            border-radius: 50px;
+        }
+        .slider-pager{
+            display: none;
+        }
+        body .swiper-container .swiper-wrapper .swiper-slide-advertising img{
+            height: 100%;
+            width: 100%;
+            
+        }
+        .remark_position{
+			margin-left:20px;
+        	float:left;
+        	margin-top:0px;
+        	border:0px blue solid;
+        	width:150px;
+        	height:50px;
+        	font-size:15px;
+        	white-space:normal;
+        	line-height:1.4rem;
+        }
+        .name_position{
+        	margin-left:20px;
+        	position:relative;
+        	top:-14px;
+        	border:0px red solid;
+        	font-size:12px;
+        }
+		.swiper-container-lunbo{
+		    height: 12.1rem;
+		   
+		}

@@ -1,0 +1,61 @@
+.comment_window{
+    width: 100%;
+    height: 230px;
+    resize:none;
+}
+.shuoshuo{
+    border: 0px cornflowerblue solid;
+    width: 90%;
+    height: 40%;
+    margin-left: 5%;
+    margin-top: 30px;
+}
+.shuoshuo_pl{
+    border: 1px cornflowerblue solid;
+    width: 70%;
+    margin-left: 5%;
+    height: 23px;
+    margin-bottom: 10px;
+    bottom: -1px;
+    margin-top: 43px;
+}
+shuoshuo_fb{
+    width: 10%;
+
+}
+.shuoshuo button{
+    width: 56px;
+    height: 30px;
+    background-color: white;
+}
+.shuoshuo_concant{
+    width: 90%;
+    margin-left: 5%;
+    border: 1px cornflowerblue solid;
+}
+.btn-fa {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    position: relative;
+    left: 78%;
+    bottom: 32px;
+}
+.btn-fasong {
+    color: #0C0C0C;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    float: left;
+}
+.huida{
+    margin-top: 10px;
+}
+.shuoshuo span{
+    position: relative;
+    right: 37px;
+float: left;
+}

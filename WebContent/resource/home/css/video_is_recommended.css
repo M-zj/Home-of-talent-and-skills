@@ -1,0 +1,38 @@
+.div_m_p{
+            margin: auto 0px;padding: 0px 0px;
+        }
+        .col{
+            background-color: #F9FAFB;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            text-align: center;
+        }
+        .input_question{
+            width: 78%;
+            border-radius: 4px;
+            text-indent: 0.5em;
+            float: left;
+        }
+        .input_submit{
+            float: right;
+            background-color: #F2F2F2;
+            width: 67px;
+            height: 35px;
+            border-radius: 4px;
+        }
+        .question_box{
+            background-color:#F2F2F2;
+            height:100%;
+            margin-left: -10px;
+            width: 358px;
+            margin-top: -8px;
+            border-top:1px solid #DDDDDD;
+        }
+        .zhuanjia_style{
+            border: 2px solid red;
+            border-radius: 5px;
+            margin-left: 4px;
+            padding: 2px 1px;
+            color: black;
+        }

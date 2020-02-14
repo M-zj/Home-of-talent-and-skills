@@ -1,0 +1,59 @@
+@CHARSET "UTF-8";
+/* 分类 */
+body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color:#000;
+            margin: 0;
+            padding: 0;
+        }
+        .type {
+				margin: 0 auto;
+				background-color:#E2E2E2;
+				margin-top: 1.125rem;
+				width: 98%;
+				padding: 2%;
+				
+				border-radius: 8px;
+			}
+ .col {
+				background-color: #F9FAFB;
+				padding: 5px;
+				border-radius: 2px;
+				text-align: center;
+			}
+			
+			.type_son {
+				padding: 5%;
+				border-radius: 2px;
+				text-align: center;				
+			}			
+			 .message-name{
+        	margin-top:-20px;
+        	text-indent: 0.5em;
+        }
+        .message-remark{
+        	margin-top:-40px;width:200px;height:20px;
+        	text-indent: 0.5em;
+        }
+		.message-click{
+			width:200px;height:20px;
+			text-indent: 0.5em;
+		} 
+		
+		/* 滑动 */
+		.name_position{
+			position: absolute;
+    		top: 35%;
+    		height: 20px;
+    		width: 100px;
+		}
+		
+		.heat_position{
+			position: relative;
+		    top: -2px;
+		    left: 18px;
+		    height: 20px;
+		    width: 100px;
+		}

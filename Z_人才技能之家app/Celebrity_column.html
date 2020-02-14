@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html ng-app="starter">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+		<!-- ionic -->
+		<link href="https://cdn.staticfile.org/ionic/1.3.2/css/ionic.css" rel="stylesheet">
+		<script src="https://cdn.staticfile.org/ionic/1.3.2/js/ionic.bundle.min.js"></script>
+		<!-- swiper -->
+		<link rel="stylesheet" href="resource/swiper/swiper.css">
+		<script src="./resource/swiper/swiper.min.js"></script>
+		<!-- mui -->
+		<!--  <link href="./resource/home/css/ui.css" rel="stylesheet">  -->
+		<!-- layui -->
+		<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+		<script type="text/javascript" src="https://heerey525.github.io/layui-v2.4.3/layui/layui.js"></script>
+		<!-- 其他 -->
+		<link rel="stylesheet" href="resource/home/css/home.css">
+		<!-- 滑动里面内容样式 -->
+		<link href="./resource/home/css/app.css" rel="stylesheet">
+		<!--分类排版 -->
+		<link rel="stylesheet" href="resource/mzj/Celebrity_column.css">
+		<title>名师专栏</title>
+	</head>
+	<body ng-controller="controller">
+		<ion-header-bar class="bar-positive bar-header ">
+			<h1 class="title">名师专栏</h1>
+		</ion-header-bar>
+		<ion-pane>
+			<ion-content delegate-handle="mainScroll" padding="true">
+				<ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher> <!-- 分类 -->
+				<div class="row">
+					<div class=" type layui-row">
+						<div class=" type_son layui-col-xs3" ng-repeat="tt in teatype" style="width: 30%;margin-left: 6px" ng-click="clickType('{{tt.tid}}')">
+							<img  style="width: 2.3rem; height: 2.3rem;" ng-src="{{tt.ticon}}"><br />
+							<span style="font-size: 0.9rem;">{{tt.tname}}</span>
+						</div>
+					</div>
+				</div>
+				<!-- 热门专家 -->
+				<div class="row">
+					<div class="row" style="font-size: 1rem;">
+						<h4>
+							<b>热门专栏</b>
+						</h4>
+					</div>
+				</div>
+				<!-- 滑动专家 -->
+				<div class="row">
+					<div class="col">
+						<div class="col-demo div_rencaizhanshi">
+							<div class="swiper-container-caidnalan swiper-container">
+								<div class="swiper-wrapper">
+									<div ng-repeat="t in teacher" ng-click="zhuanjia(t.iid)" class="swiper-slide swiper-slide-message item-thumbnail-right">
+										<img  ng-src="{{t.iimg}}" style="height: 63%; width: 23%;" />
+										<div class="remark_position">{{t.iname}}</div>
+										<div class="name_position">{{t.iintroduction}}</div>
+										<div class="heat_position">热度 <span style="color:red;">{{t.iclick}}</span></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br />
+				<div id="topest" ng-repeat="t in teacher" ng-click="zhuanjia(t.iid)">
+					<span class="item item-thumbnail-left"> <img  ng-src="{{t.iimg}}">
+						<h2>{{t.iname}}</h2> <span>{{t.iintroduction}}</span>
+						<div>热度 <span style="color:red;">{{t.iclick}}</span></div>
+					</span>
+				</div>
+			</ion-content>
+		</ion-pane>
+		<script src="resource/swiper/swiper.min.js"></script>
+		<script src="./resource/home/js/mui.min.js"></script>
+		<!-- 滑动js -->
+		<script type="text/javascript">
+	/*请求服务器地址*/
+	//var srx_url="http://www.cytxjd.top/Home_of_talent_and_skills/";
+	/*请求本地地址*/
+	//var srx_url="http://192.168.199.233:8080/Home_of_talent_and_skills/";
+	var srx_url="http://www.cytxjd.top/Home_of_talent_and_skills/";
+			angular.module('starter', ['ionic'])
+
+				.run(function($ionicPlatform) {
+					$ionicPlatform.ready(function() {
+						// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+						// for form inputs)
+						if (window.cordova && window.cordova.plugins.Keyboard) {
+							cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+						}
+						if (window.StatusBar) {
+							StatusBar.styleDefault();
+						}
+					});
+				})
+				.controller(
+					'controller',
+					[
+						'$scope',
+						'$timeout',
+						'$http',
+						'$location',
+						'$ionicScrollDelegate',
+						function($scope, $timeout, $http, $location,
+							$ionicScrollDelegate, $anchorScroll) {
+							//下拉刷新
+							$scope.doRefresh = function() {
+								/* selteacher(); */
+								seltype();
+								$scope.$broadcast('scroll.refreshComplete');
+
+							};
+							selteacher();
+							seltype();
+							//查询教师
+							//获取数据绑定到list
+							function selteacher() {
+								$http.get(srx_url+'selteacher.do') //注意改为自己本站的地址，不然会有跨域问题
+									.success(function(e) {
+										 console.log(e.data);
+										$scope.teacher = e.data;
+									})
+							}
+							//查询专家类型
+							//获取数据绑定到list
+							function seltype() {
+								$http.get(srx_url+'seltype.do') //注意改为自己本站的地址，不然会有跨域问题
+									.success(function(e) {
+										/*  console.log(e); */
+										$scope.teatype = e.data;
+									})
+							}
+							/* 点击按类型查询专家 */
+							$scope.clickType = function(tid) {
+								$http.get(srx_url+'conditionSel.do', {
+										params: {
+											tid: tid
+										}
+									}) //注意改为自己本站的地址，不然会有跨域问题
+									.success(function(e) {
+										/*  console.log(e.data); */
+										$scope.teacher = e.data;
+									})
+								$location.hash("topest");
+								$ionicScrollDelegate.$getByHandle('mainScroll')
+									.anchorScroll("topest");
+
+							};
+							//点击专家
+							/* $scope.clickZJ = function(iid) {
+								alert(iid);
+							}; */
+
+							/* 跳转 */
+							$scope.zhuanjia = function(a) {
+								$http.get(srx_url+"list.do",{params:{id:a}}).success(function(e){
+									 console.log(e)
+								})
+								location.href = "list.html";
+							}
+
+						}
+					])
+		</script>
+		<script type="text/javascript">
+			onload = function() {
+				//滑动专家
+				var swiper = new Swiper('.swiper-container-caidnalan', {
+					slidesPerView: 1.2,
+					paginationClickable: true,
+					spaceBetween: 10,
+					freeMode: true,
+					observer: true,//修改swiper自己或子元素时，自动初始化swiper
+					observeParents: true//修改swiper的父元素时，自动初始化swiper
+				});
+				var swiper = new Swiper('.swiper-container-message', {
+					slidesPerView: 5,
+					paginationClickable: true,
+					spaceBetween: 20,
+					freeMode: true,
+					observer: true,//修改swiper自己或子元素时，自动初始化swiper
+					observeParents: true//修改swiper的父元素时，自动初始化swiper
+				});
+			}
+		</script>
+	</body>
+</html>

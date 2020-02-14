@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html ng-app="ionicApp">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <title>互动问答</title>
+    <link href="./resource/css/Expert_comment.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/ionic/1.3.2/css/ionic.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/ionic/1.3.2/js/ionic.bundle.min.js"></script>
+    <style>
+        input {
+            display: inline-block;
+            width: 70%;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #eeeeee;
+            border: 1px solid #eeeeee;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            margin-top: 10px;
+            margin-left: 5%;
+        }
+    </style>
+    <script>
+    
+        angular.module('ionicApp', ['ionic'])
+            .controller('AppCtrl', function($scope, $ionicModal,$http) {
+	/*请求服务器地址*/
+	//var srx_url="http://www.cytxjd.top/Home_of_talent_and_skills/";
+	/*请求本地地址*/
+	//var srx_url="http://192.168.199.233:8080/Home_of_talent_and_skills/";
+	var srx_url="http://www.cytxjd.top/Home_of_talent_and_skills/";
+                $ionicModal.fromTemplateUrl('templates/modal.html', {
+                    scope: $scope
+                }).then(function(modal) {
+                    $scope.modal = modal;
+                });
+
+                $http.get(srx_url+"zjdyid.do").success(function(e) {
+              			 		console.log(e);
+                  				$scope.rclist=e.data;
+              });
+                $http.get(srx_url+"zjtop.do").success(function(e){
+            	    $scope.rclistzjtop=e.data;
+           	 	    console.log(e);
+      			});
+          		$http.get(srx_url+"zj.do").success(function(e){
+            	    $scope.rclistzj=e.data;
+           	 	    console.log(e);
+      			});
+                $scope.createContact=function(up){	
+                
+              		 $http.get(srx_url+"zjdyinsert.do",{params:{content:up.content}}).success(function(e){
+              			
+              		}); 
+          			
+              	 }
+                $scope.hddyRefresh=function(){
+					console.log("互动答疑刷新咯！");
+					 $http.get(srx_url+"zjtop.do").success(function(e){
+		            	    $scope.rclistzjtop=e.data;
+		           	 	    console.log(e);
+		      			});
+		          		$http.get(srx_url+"zj.do").success(function(e){
+		            	    $scope.rclistzj=e.data;
+		           	 	    console.log(e);
+		      			});
+					$scope.$broadcast('scroll.refreshComplete');
+				}
+            });
+    </script>
+</head>
+<body ng-controller="AppCtrl" >
+
+<div ng-repeat="xo in rclist">
+<ion-header-bar class="bar-positive" >
+    <h1 class="title">{{xo.iname}}</h1>
+    <div class="buttons">
+        <button class="button button-icon ion-compose" ng-click="modal.show()">
+        </button>
+    </div>
+</ion-header-bar>
+<ion-content >
+<ion-refresher pulling-text="下拉刷新" on-refresh="hddyRefresh()"></ion-refresher>
+    <div class="shuoshuo" style="margin-top: 50px"  >
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;游客</h4>
+        <div class="shuoshuo_concant"  ng-repeat="x in rclistzjtop">
+      	 {{x.yhcontent}}   
+          </div>
+        <input type="text" class="form-control" ng-model="new.content" placeholder="追问">
+        <button class="btn-fa btn-fasong" ng-click="createContact(new)" onclick="javascript:window.location.reload();">提问</button>
+        <div style="margin-left: 60px;"  ng-repeat="x in rclistzj" >
+        
+        <span>游客&nbsp;&nbsp;&nbsp;&nbsp;{{x.yhcontent}}</span><br>
+           <span>{{x.iname}}&nbsp;&nbsp;&nbsp;&nbsp;{{x.zjcontent}}</span><br>         
+   		</div>   		        
+    </div>
+</ion-content>
+</div>
+<script id="templates/modal.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-positive">
+            <h1 class="title" >游客</h1>
+            <button class="button button-clear button-primary" ng-click="modal.hide()">取消</button>
+        </ion-header-bar>
+        <ion-content class="padding">
+            <div class="list">
+                <textarea rows="" cols="" class="comment_window" ng-model="new.content"></textarea>
+                <button class="button button-full button-positive" ng-click="createContact(new)">发表</button>
+            </div>
+        </ion-content>
+    </ion-modal-view>
+</script>
+
+</body>
+</html>

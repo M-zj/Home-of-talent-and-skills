@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+.center-info{
+	/* height: 90%; */
+	width:98%;
+	 margin: 10px auto;
+	/*padding: 5px 20px; */
+	overflow: auto;
+	overflow-x:hidden;
+	
+}
